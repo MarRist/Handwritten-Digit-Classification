@@ -1,20 +1,5 @@
-
-# coding: utf-8
-
-# In[4]:
-
-
-# Martina Risteska (ID: 1003421781)
-'''
-Question 2.0 Skeleton Code
-
-Here you should load the data and plot
-the means for each of the digit classes.
-'''
-
 import data
 import numpy as np
-# Import pyplot - plt.imshow is useful!
 import matplotlib.pyplot as plt
 
 
