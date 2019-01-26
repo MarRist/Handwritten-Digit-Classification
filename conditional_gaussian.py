@@ -1,19 +1,10 @@
 
-# coding: utf-8
-
-# In[6]:
-
-
-# Martina Risteska (ID: 1003421781)
 '''
-Question 2.2 Skeleton Code
-
-Here you should implement and evaluate the Conditional Gaussian classifier.
+Implementation of Conditional Gaussian classifier.
 '''
 
 import data
 import numpy as np
-# Import pyplot - plt.imshow is useful!
 import matplotlib.pyplot as plt
 get_ipython().magic('matplotlib inline')
 import pandas as pd
@@ -21,13 +12,11 @@ import math
 
 def compute_mean_mles(train_data, train_labels):
     '''
-    Compute the mean estimate for each digit class
-
-    Should return a numpy array of size (10,64)
-    The ith row will correspond to the mean estimate for digit class i
+    Compute the mean estimate for each digit class and return a numpy array of size (10,64)
+    where the i-th row correspond to the mean estimate for digit class i
     '''
     means = np.zeros((10, 64))
-    data_df = pd.DataFrame(train_data) # create a dataframe from the train data and labels used later for a better data manipulation
+    data_df = pd.DataFrame(train_data) 
     data_df["TrainLabels"] = train_labels
     
     # Compute means for each of the class digit
@@ -38,13 +27,12 @@ def compute_mean_mles(train_data, train_labels):
 
 def compute_sigma_mles(train_data, train_labels):
     '''
-    Compute the covariance estimate for each digit class
-
-    Should return a three dimensional numpy array of shape (10, 64, 64)
+    Compute the covariance estimate for each digit class and 
+    return a three dimensional numpy array of shape (10, 64, 64)
     consisting of a covariance matrix for each digit class 
     '''
     covariances = np.zeros((10, 64, 64))
-    data_df = pd.DataFrame(train_data) # create a dataframe from the train data and labels used later for a better data manipulation
+    data_df = pd.DataFrame(train_data) 
     data_df["TrainLabels"] = train_labels
     
     # Compute means for each of the classes
@@ -55,7 +43,8 @@ def compute_sigma_mles(train_data, train_labels):
         train_data_class = data_df.loc[data_df.TrainLabels == digit_class]
         train_data_class = train_data_class.drop(['TrainLabels'], axis=1)
         
-        means_matrix = np.tile(means[digit_class], (train_data_class.shape[0],1)) # create a means matrix from the means vector per class
+        # create a means matrix from the means vector per class
+        means_matrix = np.tile(means[digit_class], (train_data_class.shape[0],1)) 
         
         class_covariance = (train_data_class - means_matrix).T.dot((train_data_class - means_matrix))/train_data_class.shape[0]
         covariances[digit_class] = (class_covariance) 
@@ -64,9 +53,15 @@ def compute_sigma_mles(train_data, train_labels):
 
 
 def check_symmetric(a, tol=1e-8):
+    '''
+    Check if a matrix is symmetric.
+    '''
     return np.allclose(a, a.T, atol=tol)
 
 def is_pos_def(a):
+    '''
+    Check if a matrix is positive semidefinite.
+    '''
     return np.all(np.linalg.eigvals(a) > 0)
 
 def plot_cov_diagonal(covariances):
@@ -88,13 +83,12 @@ def generative_likelihood(digits, means, covariances):
     Compute the generative log-likelihood:
         log p(x|y,mu,Sigma)
 
-    Should return an n x 10 numpy array 
+    and return an n x 10 numpy array 
     '''
-    # digits refer to train/test data
     
     d = digits.shape[1]
     n = digits.shape[0]
-    log_p_digits = np.zeros((digits.shape[0], 10)) # # used to store the log density for all datapoints for each class
+    log_p_digits = np.zeros((digits.shape[0], 10)) # used to store the log density for each class
     
     prior = 1/float(10)
     const = d*np.log(2*math.pi)
@@ -126,11 +120,9 @@ def conditional_likelihood(digits, means, covariances):
 
         log p(y|x, mu, Sigma)
 
-    This should be a numpy array of shape (n, 10)
+    and return a numpy array of shape (n, 10)
     Where n is the number of datapoints and 10 corresponds to each digit class
-    '''
-    # digits refer to train/test data
-    
+    ''' 
     prior = 1/float(10)
     d = digits.shape[1]
     n = digits.shape[0]
@@ -148,7 +140,6 @@ def conditional_likelihood(digits, means, covariances):
     log_conditional_p = log_generative_p + np.log(np.tile(prior,(n, 10))) - np.log(generative_evidence_matrix)
     
     return log_conditional_p
-
 
 
 def avg_conditional_likelihood(digits, labels, means, covariances):
@@ -186,7 +177,10 @@ def classify_data(digits, means, covariances):
 
 
 def accuracy(classification_labels, true_labels):
-    
+    '''
+    Compute the accuracy between the predicted and the true labels 
+    i.e., classification_labels and true_labels
+    '''
     difference = abs(np.subtract(np.array(classification_labels), true_labels))
     
     return 100*((classification_labels.shape[0]-np.count_nonzero(difference))/classification_labels.shape[0])
