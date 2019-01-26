@@ -1,6 +1,6 @@
 
 '''
-Implementation of Conditional Gaussian classifier.
+Conditional Gaussian classifier implementation.
 '''
 
 import data
