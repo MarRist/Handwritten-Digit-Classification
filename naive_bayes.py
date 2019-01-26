@@ -1,28 +1,19 @@
 
-# coding: utf-8
-
-# In[4]:
-
-
-# Martina Risteska (ID: 1003421781)
 '''
-Question 2.3 Skeleton Code
-
-Here you should implement and evaluate the Naive Bayes classifier.
+Naive Bayes classifier implemention.
 '''
 
 import data
 import numpy as np
 import pandas as pd
 from scipy.stats import bernoulli
-# Import pyplot - plt.imshow is useful!
 import matplotlib.pyplot as plt
 get_ipython().magic('matplotlib inline')
 
 
 def binarize_data(pixel_values):
     '''
-    Binarize the data by thresholding around 0.5
+    Binarize the data by thresholding around 0.5 based on the pixel_values
     '''
     return np.where(pixel_values > 0.5, 1.0, 0.0)
 
@@ -30,28 +21,28 @@ def binarize_data(pixel_values):
 def compute_parameters(train_data, train_labels):
     '''
     Compute the eta MAP estimate/MLE with augmented data
-
-    You should return a numpy array of shape (10, 64)
-    where the ith row corresponds to the ith digit class.
+    and return a numpy array of shape (10, 64)
+    where the i-th row corresponds to the ith digit class.
     '''
     eta = np.zeros((10, 64))
     const1 = np.ones((1,64))
     const2 = 2*const1
-    data_df = pd.DataFrame(train_data) # creating a dataframe from the train data and train labels used later for data manipulation
+    data_df = pd.DataFrame(train_data) 
     data_df["TrainLabels"] = train_labels
     
     # Compute sum of ones per class
-    sums_df = data_df.groupby('TrainLabels', as_index=False).sum() #returns sums of all datapoints per features conditioned on each class
-    counts_df = data_df.groupby('TrainLabels', as_index=False).count() # returns the number of datapoints per class 
+    sums_df = data_df.groupby('TrainLabels', as_index=False).sum() 
+    counts_df = data_df.groupby('TrainLabels', as_index=False).count() # number of datapoints per class 
     
     for digit_class in range(10):
-        data_class_sums = sums_df.loc[sums_df.TrainLabels == digit_class] # extract the vector from the dataframe that corresponds to the digit_class
+        data_class_sums = sums_df.loc[sums_df.TrainLabels == digit_class] 
         data_class_sums = np.array(data_class_sums.drop(['TrainLabels'], axis=1))
         
         data_class_counts = counts_df.loc[counts_df.TrainLabels == digit_class]
         data_class_counts = np.array(data_class_counts.drop(['TrainLabels'], axis=1))
         
-        eta[digit_class] = (data_class_sums + const1)/(data_class_counts + const2) # eta = (N_ones + 1)/N_k + 2
+        # eta = (N_ones + 1)/N_k + 2
+        eta[digit_class] = (data_class_sums + const1)/(data_class_counts + const2) 
     return eta
 
 
@@ -64,19 +55,17 @@ def plot_images(class_images):
         class_images_list.append((class_images[i]).reshape(8,8))
 
     # Plot all means on same axis
-    plt.figure(figsize=(20, 5))
+    plt.figure(figsize = (20, 5))
     plt.axis('off')
     all_concat = np.concatenate(class_images_list, 1)
-    plt.imshow(all_concat, cmap='gray')
+    plt.imshow(all_concat, cmap = 'gray')
     plt.show()
     
     
 def generate_new_data(eta):
     '''
-    Sample a new data point from your generative distribution p(x|y,theta) for
-    each value of y in the range 0...10
-
-    Plot these values
+    Sample a new data point from the generative distribution p(x|y,theta) for
+    each value of y in the range 0...10 and plot these values
     '''
     generated_data = np.zeros((10, 64))
     generated_datum = np.zeros((64, 1))
@@ -91,7 +80,7 @@ def generative_likelihood(bin_digits, eta):
     Compute the generative log-likelihood:
         log p(x|y, eta)
 
-    Should return an n x 10 numpy array 
+    and return an n x 10 numpy array .
     '''
     n = bin_digits.shape[0]
     d = bin_digits.shape[1]
@@ -100,10 +89,15 @@ def generative_likelihood(bin_digits, eta):
     ones = np.ones((1, d))
     
     for idx, digit in enumerate(bin_digits):
-        for idx_class, eta_class in enumerate(eta):
-            digit_logEta_1 = digit.dot(np.transpose(np.log(eta_class))) # compute the part when p(b=1)=eta
-            digit_logEta_0 =  (ones - digit).dot(np.transpose(np.log(ones - eta_class))) # compute the part when p(b=0)=(1-eta)
+        for idx_class, eta_class in enumerate(eta)
+            # compute the part when p(b=1)=eta
+            digit_logEta_1 = digit.dot(np.transpose(np.log(eta_class))) 
+            
+            # compute the part when p(b=0)=(1-eta)
+            digit_logEta_0 =  (ones - digit).dot(np.transpose(np.log(ones - eta_class))) 
+            
             gen_likelihood[idx_class] = digit_logEta_1 + digit_logEta_0
+            
         log_gen_likelihood[idx] = np.transpose(gen_likelihood)
         
     return log_gen_likelihood
@@ -115,8 +109,8 @@ def conditional_likelihood(bin_digits, eta):
 
         log p(y|x, eta)
 
-    This should be a numpy array of shape (n, 10)
-    Where n is the number of datapoints and 10 corresponds to each digit class
+    and return a be a numpy array of shape (n, 10)
+    where n is the number of datapoints and 10 corresponds to each digit class.
     '''
     prior = 1/float(10) # prior for each class digit
     n = bin_digits.shape[0]
@@ -150,18 +144,18 @@ def avg_conditional_likelihood(bin_digits, labels, eta):
     true_class_cond_likelihood = [] # used to store the true classes
     
     cond_likelihood = conditional_likelihood(bin_digits, eta)
-    cond_likelihood_df = pd.DataFrame(cond_likelihood) # creating a dataframe from the cond likelihood for easier manipulation later
+    cond_likelihood_df = pd.DataFrame(cond_likelihood) 
 
     # Extract the log-likelihood on the position of where the true label is stored
     for idx, true_label in enumerate(labels):
-        true_class_cond_likelihood.append(cond_likelihood_df.loc[idx, true_label]) # note: the columns in the dataframe are the digit classes
+        true_class_cond_likelihood.append(cond_likelihood_df.loc[idx, true_label]) 
           
     return (1/float(n)*sum(true_class_cond_likelihood))
 
 
 def classify_data(bin_digits, eta):
     '''
-    Classify new points by taking the most likely posterior class
+    Classify new points by taking the most likely posterior class.
     '''
     cond_likelihood = conditional_likelihood(bin_digits, eta) # (n,10) shape
     cond_likelihood_df = pd.DataFrame(np.exp(cond_likelihood))
@@ -173,13 +167,16 @@ def classify_data(bin_digits, eta):
 
 
 def accuracy(classification_labels, true_labels):
-    
+    '''
+    Compute the accuracy.
+    '''
     difference = abs(np.subtract(np.array(classification_labels), true_labels))
     return 100*((classification_labels.shape[0]-np.count_nonzero(difference))/classification_labels.shape[0])
 
 
 
 def main():
+    # Load data
     train_data, train_labels, test_data, test_labels = data.load_all_data('data')
     train_data, test_data = binarize_data(train_data), binarize_data(test_data)
 
