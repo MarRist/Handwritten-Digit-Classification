@@ -1,19 +1,10 @@
 
-# coding: utf-8
-
-# In[5]:
-
-
-# Martina Risteska (ID: 1003421781)
 '''
-Question 2.1 Skeleton Code
-
-Here you should implement and evaluate the k-NN classifier.
+k-NN classifier.
 '''
 
 import data
 import numpy as np
-# Import pyplot - plt.imshow is useful!
 import matplotlib.pyplot as plt
 import os
 import zipfile
@@ -52,9 +43,8 @@ class KNearestNeighbor(object):
 
     def query_knn(self, test_point, k):
         '''
-        Query a single test point using the k-NN algorithm
-
-        You should return the digit label provided by the algorithm
+        Query a single test point using the k-NN algorithm and
+        return the digit label provided by the algorithm.
         '''
         # create a dataframe used later for a better data manipulation
         results_df = pd.DataFrame(self.train_labels) 
@@ -72,7 +62,7 @@ class KNearestNeighbor(object):
         digits_counts = digits.value_counts()
         digits_counts_max = digits_counts[digits_counts == digits_counts.max()] # extract the max values, will return several max values if they are equal
         
-        # Brake Ties if two of more classes have an equal majority vote
+        # Brake ties if two of more classes have the same majority vote
         if (digits_counts_max.shape[0] > 1): 
             while digits_counts_max.shape[0] != 1:
                 k = k - 1
@@ -103,10 +93,6 @@ def visualize(k, average_test_accuracy):
 def cross_validation(train_data, train_labels, k_range=np.arange(1,16)):
     '''
     Perform 10-fold cross validation to find the best value for k
-
-    Note: Previously this function took knn as an argument instead of train_data,train_labels.
-    The intention was for students to take the training data from the knn object - this should be clearer
-    from the new function signature.
     '''
 
     list_average_test_accuracy = []
@@ -121,7 +107,7 @@ def cross_validation(train_data, train_labels, k_range=np.arange(1,16)):
         
         list_average_test_accuracy.append(np.mean(list_test_accuracy))
     
-    # vizualize the test accuracy curve and print it
+    # vizualize the test accuracy curve
     visualize(k_range, list_average_test_accuracy) 
     print("The average test accuracy per fold:", list_average_test_accuracy)
     
@@ -135,8 +121,9 @@ def classification_accuracy(knn, k, eval_data, eval_labels):
     '''
     Evaluate the classification accuracy of knn on the given 'eval_data'
     using the labels
+    
+    Note: Accuracy is the ratio of the total correct predictions out of all predictions made
     '''
-    # Accuracy: ratio of the total correct predictions out of all predictions made
     
     predicted_label = []
     
@@ -146,13 +133,13 @@ def classification_accuracy(knn, k, eval_data, eval_labels):
         
     diff = abs(np.subtract(np.array(predicted_label),eval_labels))
     
-    return 100*((eval_data.shape[0]-np.count_nonzero(diff))/eval_data.shape[0])
+    return 100*((eval_data.shape[0] - np.count_nonzero(diff))/eval_data.shape[0])
 
 def main():
     # Load Data
     train_data, train_labels, test_data, test_labels = data.load_all_data('data')
     
-    # train a KNN classifier using train set
+    # train a kNN classifier using train set
     knn = KNearestNeighbor(train_data, train_labels) 
 
     # Predict labels, an example
