@@ -89,7 +89,7 @@ def generative_likelihood(bin_digits, eta):
     ones = np.ones((1, d))
     
     for idx, digit in enumerate(bin_digits):
-        for idx_class, eta_class in enumerate(eta)
+        for idx_class, eta_class in enumerate(eta):
             # compute the part when p(b=1)=eta
             digit_logEta_1 = digit.dot(np.transpose(np.log(eta_class))) 
             
