@@ -28,13 +28,17 @@ For training and evaluating the Naive Bayes classifier, run `naive_bayes.py`.
 
 * Using the binary features b and the class labels, train a Bernoulli Naive Bayes classifier using MAP estimation with prior Beta(α, β) with α = β = 2. Fit the model:
 
-![eq1](https://latex.codecogs.com/gif.latex?p%28y%20%3D%20k%29%20%3D%201/10)
+<p align="center">
 
-![eq2](https://latex.codecogs.com/gif.latex?p%28b_j%20%3D%201%7Cy%20%3D%20k%29%20%3D%20n_%7Bkj%7D)
+  ![eq1](https://latex.codecogs.com/gif.latex?p%28y%20%3D%20k%29%20%3D%201/10)
 
-![eq3](https://latex.codecogs.com/gif.latex?p%28b%7Cy%20%3D%20k%2C%20n%29%20%3D%20%5Cprod%5E%7Bd%7D_%7Bj%3D1%7D%28n_%7Bkj%7D%29%5E%7Bb_j%7D%281%20-%20n_%7Bkj%7D%29%5E%7B%281%20-%20b_j%29%7D)
+  ![eq2](https://latex.codecogs.com/gif.latex?p%28b_j%20%3D%201%7Cy%20%3D%20k%29%20%3D%20n_%7Bkj%7D)
 
-![eq4](https://latex.codecogs.com/gif.latex?P%28n_%7Bkj%7D%29%20%3D%20Beta%282%2C%202%29)
+  ![eq3](https://latex.codecogs.com/gif.latex?p%28b%7Cy%20%3D%20k%2C%20n%29%20%3D%20%5Cprod%5E%7Bd%7D_%7Bj%3D1%7D%28n_%7Bkj%7D%29%5E%7Bb_j%7D%281%20-%20n_%7Bkj%7D%29%5E%7B%281%20-%20b_j%29%7D)
+
+  ![eq4](https://latex.codecogs.com/gif.latex?P%28n_%7Bkj%7D%29%20%3D%20Beta%282%2C%202%29)
+
+</p>
 
 
 
