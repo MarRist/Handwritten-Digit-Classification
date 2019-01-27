@@ -6,7 +6,7 @@ Conditional Gaussian classifier implementation.
 import data
 import numpy as np
 import matplotlib.pyplot as plt
-get_ipython().magic('matplotlib inline')
+#get_ipython().magic('matplotlib inline')
 import pandas as pd
 import math
 
