@@ -24,11 +24,13 @@ For training and evaluating the Naive Bayes classifier, run `naive_bayes.py`.
 
 * For K > 1 the K-NN algorithm may encounter ties which need to be broken down. In that case the value of K was decreased by 1 and the K-NN algorithm was re-evaluated using the reduced K value. This method was repeated until the tie was broken and the classification could have been performed, or until K = 1 was reached. 
 
-3. Find the optimal K in the 1-15 range using 10-fold cross validation. 
+* Find the optimal K in the 1-15 range using 10-fold cross-validation. 
 
 #### 2) Conditional Gaussian classifier
 
-* Using maximum likelihood, fit a set of 10 class-conditional Gaussians with a separate, full covariance matrix for each class. The conditional multivariate Gaussian probability density is:
+* Fit a set of 10 class-conditional Gaussians with a separate, full covariance matrix for each class using MLE. The conditional multivariate Gaussian probability density is:
+
+[eq0](https://latex.codecogs.com/gif.latex?p%28%5Ctextbf%7Bx%7D%7Cy%20%3D%20k%2C%20%5Cboldsymbol%7B%5Cmu%7D%2C%20%5CSigma_k%29%20%3D%20%282%5Cpi%29%5E%7B-d/2%7D%7C%5CSigma_k%7C%5E%7B-1/2%7D%5Cexp%20%5CBig%5C%7B-%5Cfrac%7B1%7D%7B2%7D%28%5Ctextbf%7Bx%7D%20-%20%5Cmu_k%29%5ET%5CSigma_k%5E%7B-1%7D%28%5Ctextbf%7Bx%7D%20-%20%5Cmu_k%29%5CBig%5C%7D)
 
 #### 3) Naive Bayes classifier
 
