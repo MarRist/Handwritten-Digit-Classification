@@ -1,3 +1,7 @@
+'''
+Load data from a given zipfile, directory, and
+digits pixels from a given test/train set.
+'''
 import zipfile
 import numpy as np
 import os
