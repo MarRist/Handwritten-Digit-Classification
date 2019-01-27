@@ -6,10 +6,10 @@ There are 700 training cases and 400 test cases for each digit; they can be foun
 
 ### RUNNING THE CODE:
 
-For loading and plotting the MNIST dataset, run /.
+For loading and plotting the MNIST dataset, run `load_and_plot.py`.
 
-For training and evaluating the kNN classifier, run /.
+For training and evaluating the kNN classifier, run `kNN.py`.
 
-For training and evaluating the Naive Bayes classifier, run /.
+For training and evaluating the Naive Bayes classifier, run `naive_bayes.py`.
 
-For training and evaluating the conditional Gaussian classifier, run /.
+For training and evaluating the conditional Gaussian classifier, run `conditional_gaussian.py`.
