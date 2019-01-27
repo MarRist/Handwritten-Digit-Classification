@@ -28,17 +28,17 @@ For training and evaluating the Naive Bayes classifier, run `naive_bayes.py`.
 
 #### 2) Conditional Gaussian classifier
 
-* Fit a set of 10 class-conditional Gaussians with a separate, full covariance matrix for each class using MLE. The conditional multivariate Gaussian probability density is:
+* A conditional Gaussians with a separate, full covariance matrix was fitted for each class using MLE. The conditional multivariate Gaussian probability density is:
 
 ![eq0](https://latex.codecogs.com/gif.latex?p%28%5Ctextbf%7Bx%7D%7Cy%20%3D%20k%2C%20%5Cboldsymbol%7B%5Cmu%7D%2C%20%5CSigma_k%29%20%3D%20%282%5Cpi%29%5E%7B-d/2%7D%7C%5CSigma_k%7C%5E%7B-1/2%7D%5Cexp%20%5CBig%5C%7B-%5Cfrac%7B1%7D%7B2%7D%28%5Ctextbf%7Bx%7D%20-%20%5Cmu_k%29%5ET%5CSigma_k%5E%7B-1%7D%28%5Ctextbf%7Bx%7D%20-%20%5Cmu_k%29%5CBig%5C%7D)
 
-where ![eq1](https://latex.codecogs.com/gif.latex?p%28y%20%3D%20k%29%20%3D%201/10).
+where ![eq1](https://latex.codecogs.com/gif.latex?p%28y%20%3D%20k%29%20%3D%201/10)
 
 #### 3) Naive Bayes classifier
 
-* The real-valued features x were converted into binary features b using 0.5 as a threshold: bj = 1 if xj > 0.5 otherwise bj = 0.
+* The real-valued features x were converted into binary features b using 0.5 as a threshold: bj = 1 if x_j > 0.5 otherwise b_j = 0.
 
-* Using the binary features b and the class labels, Bernoulli Naive Bayes classifier using MAP estimation with prior Beta(α, β) with α = β = 2 was trained. The fitted model is:
+* Bernoulli Naive Bayes classifier using MAP estimation with prior Beta(α, β) with α = β = 2 was trained using the binary features b and the class labels. The fitted model is:
 
   ![eq1](https://latex.codecogs.com/gif.latex?p%28y%20%3D%20k%29%20%3D%201/10)
 
