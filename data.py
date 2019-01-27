@@ -1,6 +1,5 @@
 import zipfile
 import numpy as np
-
 import os
 
 np.random.seed(1746)
