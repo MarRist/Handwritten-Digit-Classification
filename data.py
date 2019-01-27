@@ -3,7 +3,6 @@ import numpy as np
 
 import os
 
-# (PLEASE DO NOT CHANGE) Set random seed:
 np.random.seed(1746)
 
 PREFIX = "digit_"
