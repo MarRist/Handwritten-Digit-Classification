@@ -20,11 +20,11 @@ For training and evaluating the Naive Bayes classifier, run `naive_bayes.py`.
 
 #### 1) kNN classifier
 
-* K nearest neighbor classifier using Euclidean distance on the raw pixel data evaluated for K = 1 and K = 15
+* The kNN classifier using Euclidean distance was evaluated for K = 1 and K = 15.
 
-* For K > 1 the K-NN algorithm may encounter ties which need to be broken down. In that case the value of K was decreased by 1 and the K-NN algorithm was re-evaluated using the reduced K value. This method was repeated until the tie was broken and the classification could have been performed, or until K = 1 was reached. 
+* For K > 1 the K-NN algorithm may encounter ties. In that case the value of K was decreased by 1 and the K-NN algorithm was re-evaluated using the reduced K value or until K = 1 was reached. 
 
-* Find the optimal K in the 1-15 range using 10-fold cross-validation. 
+* An optimal K in the 1-15 range was found using 10-fold cross-validation. 
 
 #### 2) Conditional Gaussian classifier
 
@@ -36,9 +36,9 @@ where ![eq1](https://latex.codecogs.com/gif.latex?p%28y%20%3D%20k%29%20%3D%201/1
 
 #### 3) Naive Bayes classifier
 
-* Convert the real-valued features x into binary features b using 0.5 as a threshold: bj = 1 if xj > 0.5 otherwise bj = 0.
+* The real-valued features x were converted into binary features b using 0.5 as a threshold: bj = 1 if xj > 0.5 otherwise bj = 0.
 
-* Using the binary features b and the class labels, train a Bernoulli Naive Bayes classifier using MAP estimation with prior Beta(α, β) with α = β = 2. Fit the model:
+* Using the binary features b and the class labels, Bernoulli Naive Bayes classifier using MAP estimation with prior Beta(α, β) with α = β = 2 was trained. The fitted model is:
 
   ![eq1](https://latex.codecogs.com/gif.latex?p%28y%20%3D%20k%29%20%3D%201/10)
 
