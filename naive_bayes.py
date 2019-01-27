@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 from scipy.stats import bernoulli
 import matplotlib.pyplot as plt
-get_ipython().magic('matplotlib inline')
+#get_ipython().magic('matplotlib inline')
 
 
 def binarize_data(pixel_values):
